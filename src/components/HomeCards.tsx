@@ -23,7 +23,7 @@ const HomeCards = () => {
 
     const container = containerRef.current;
     if (container) {
-      container.addEventListener("scroll", handleScroll);
+      container.addEventListener("scroll", handleScroll, { passive: true });
     }
 
     return () => {
@@ -37,10 +37,11 @@ const HomeCards = () => {
   const scrollNext = () => {
     if (containerRef.current) {
       const cardWidth = containerRef.current.children[0]?.clientWidth || 0;
-      const newIndex = (index + 1) % cards.length; // Infinite loop
+      const newIndex = (index + 1) % cards.length;
       setIndex(newIndex);
-      containerRef.current.scrollTo({
-        left: newIndex * cardWidth,
+
+      containerRef.current.scrollBy({
+        left: cardWidth,
         behavior: "smooth",
       });
     }
@@ -48,11 +49,13 @@ const HomeCards = () => {
 
   return (
     <div className="relative w-full lg:px-[3rem] px-[2rem] lg:pb-[5rem] pb-[2rem]">
+      {/* ✅ THIS IS THE SCROLLABLE CONTAINER */}
       <motion.div
         ref={containerRef}
-        className="flex gap-8 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory lg:mb-[8rem] mb-[1rem]"
+        className="flex gap-8 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory w-full whitespace-nowrap"
         drag="x"
-        dragConstraints={{ left: -1000, right: 1000 }}
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.2}
       >
         {cards.map((card) => (
           <motion.div
@@ -70,7 +73,10 @@ const HomeCards = () => {
           </motion.div>
         ))}
       </motion.div>
+
+      {/* BUTTON CONTAINER */}
       <div className="absolute right-8 lg:right-12">
+        {/* Swipe Image for Mobile */}
         <div className="size-24 md:hidden lg:hidden">
           <img
             onClick={scrollNext}
@@ -79,6 +85,7 @@ const HomeCards = () => {
             alt=""
           />
         </div>
+        {/* Button for Larger Screens */}
         <Button
           text="View More"
           className="hidden md:block lg:block text-[red] text-2xl border-2 border-[red] py-4 px-6 font-bold rounded-3xl"
