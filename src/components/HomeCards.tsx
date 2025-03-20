@@ -24,11 +24,15 @@ const HomeCards = () => {
     const container = containerRef.current;
     if (container) {
       container.addEventListener("scroll", handleScroll);
+      container.addEventListener("touchmove", (e) => e.preventDefault(), {
+        passive: false,
+      });
     }
 
     return () => {
       if (container) {
         container.removeEventListener("scroll", handleScroll);
+        container.removeEventListener("touchmove", (e) => e.preventDefault());
       }
     };
   }, []);
