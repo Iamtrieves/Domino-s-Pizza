@@ -12,7 +12,7 @@ const HomeCards = () => {
   // Function to scroll to the next card
   const scrollNext = () => {
     if (containerRef.current) {
-      const cardWidth = containerRef.current.firstChild?.clientWidth || 0;
+      const cardWidth = containerRef.current.children[0]?.clientWidth || 0;
       const newIndex = (index + 1) % cards.length; // Infinite loop
       setIndex(newIndex);
       containerRef.current.scrollTo({
@@ -21,6 +21,7 @@ const HomeCards = () => {
       });
     }
   };
+
   return (
     <div className="relative w-full lg:px-[3rem] px-[2rem] lg:pb-[5rem] pb-[2rem]">
       <motion.div
