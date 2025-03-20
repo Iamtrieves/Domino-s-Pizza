@@ -54,7 +54,7 @@ const HomeCards = () => {
     <div className="relative w-full lg:px-[3rem] px-[2rem] lg:pb-[5rem] pb-[2rem]">
       <motion.div
         ref={containerRef}
-        className="flex gap-8 overflow-x-auto container no-scrollbar scroll-smooth snap-x snap-mandatory lg:mb-[8rem] mb-[1rem]"
+        className="flex gap-8 overflow-x-scroll container no-scrollbar scroll-smooth snap-x snap-mandatory lg:mb-[8rem] mb-[1rem]"
         drag="x"
         dragConstraints={{ left: -1000, right: 1000 }}
       >
