@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Card from "./Card";
 import { cards } from "../../cards";
 import Button from "./Button";
@@ -8,6 +8,30 @@ import SwipeImage from "../assets/images/swipe.svg";
 const HomeCards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
+
+  // Function to track scroll position and update index
+  useEffect(() => {
+    const handleScroll = () => {
+      if (containerRef.current) {
+        const cardWidth = containerRef.current.children[0]?.clientWidth || 0;
+        const newIndex = Math.round(
+          containerRef.current.scrollLeft / cardWidth
+        );
+        setIndex(newIndex);
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
 
   // Function to scroll to the next card
   const scrollNext = () => {
