@@ -10,7 +10,7 @@ const TestimonialSection = () => {
         <div className="size-50 absolute md:hidden lg:hidden">
           <img src={backgroundImage} alt="" />
         </div>
-        <div>
+        <div className="overflow-hidden">
           <HomeCards />;
         </div>
       </div>
